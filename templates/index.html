@@ -1,12 +1,56 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Cloud Native App</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload</title>
     <style>
-        body { background-color: {{ bg_color }}; }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: {{ bg_color }};
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .upload-form input[type="file"] {
+            margin-bottom: 20px;
+        }
+        .upload-form button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .upload-form button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
-    <h1>Welcome! ({{ bg_color }} version)</h1>
+    <div class="container">
+    <h1>Upload Your Image</h1>
+    <form class="upload-form" action="/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="image" accept="image/jpeg, image/jpg" required>
+        <button type="submit">Upload</button>
+    </form>
+
+    <h2>Uploaded Images</h2>
+    <ul>
+        {% for image in images %}
+            <li><a href="{{ url_for('view_image', filename=image) }}">{{ image }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
 </body>
 </html>
